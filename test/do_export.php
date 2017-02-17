@@ -38,7 +38,7 @@ function printCSV($getDatabaseTable, $databaseTableHeaders){
 		if($rowNum == 0){
 			$rowNum++;
 			continue;
-		}
+			}
 		$line = '';
 		foreach( $row as $value){
 			if( ( !isset( $value ) ) || ( $value == ",")){
@@ -62,21 +62,30 @@ function printCSV($getDatabaseTable, $databaseTableHeaders){
 	header("Expires: 0");
 	print "$header\n$data";
 }
-
+function constructQuery($fields,$databaseTable){
+	$query = "SELECT ";
+	$query .= $fields;
+	$query .= " FROM " . $databaseTable;
+	return $query;
+}
 session_start();
+if( isset($_POST['checkboxvar'])){
 	$databaseTable = $_POST['county'];
 	//echo "You have selected " . $databaseTable . " County" . '<br><br>';
 	//echo "<b>Database Table Headers: </b><br>";
-	$getDatabaseTable = mysqli_query($conn, "SELECT * FROM " . $databaseTable);
+	$fields = implode(', ', $_POST['checkboxvar']);
+	$query = constructQuery($fields, $databaseTable);
+	$getDatabaseTable = mysqli_query($conn, $query);
 	$databaseTableHeaders = mysqli_fetch_fields($getDatabaseTable);
 	$databaseTableHeaders = trimHeaderInfo($databaseTableHeaders);
 	
 	$fields = mysqli_num_fields($getDatabaseTable);
 	//echo "<br><b>Number of Fields: </b>" . $fields . "<br><br>";
-	
+	//echo "<table><tr>";
 	//foreach ( $databaseTableHeaders as $headers ){
-		//echo $headers . ", ";
+		//echo "<td>" . $headers . "</td>";
 	//}
+	//echo "</tr></table>";
 	//echo "<br><br>";
 	//printTable($getDatabaseTable, $databaseTableHeaders);
 	printCSV($getDatabaseTable, $databaseTableHeaders);
@@ -92,4 +101,8 @@ session_start();
 			//echo "<b>ID:</b>" . $row[$databaseTableHeaders[0]] . " <b>Full Name: </b>" . $row[$databaseTableHeaders[1]] . " <b>Address 1: </b>" . $row[$databaseTableHeaders[2]] . " <b>Address 2: </b>" . $row[$databaseTableHeaders[3]] . " <b>City: </b>" . $row[$databaseTableHeaders[4]] . " <b>State: </b>" . $row[$databaseTableHeaders[5]] . " <b>Zip: </b>" . $row[$databaseTableHeaders[6]] . " <b>Party: </b>" . $row[$databaseTableHeaders[7]] . "<br>";
 		}
 	}*/
+}
+else{
+	echo "error passing selection";
+}
 ?>

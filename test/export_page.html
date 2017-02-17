@@ -6,6 +6,9 @@
 
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="StyleSheet" type="styles.css">
+</head>
 <body>
 <form action="do_export.php" method="POST" enctype="multipart/form-data">
 	<input type="file" name="uploadFile[]" multiple=""/><br>
@@ -14,10 +17,11 @@
 		<option value="ulster">Ulster County</option>
 		<option value="columbia">Columbia County</option>
 	</select>   
-	<button type="submit" name="btn-export">Export</button>
-	<table>
-		
-	</table>
+	<button type="button" name="selectCounty" id="selectCounty">Select County</button>
+	<div id="selectFields"></div>
+	<button type="submit" id="btn-export" name="btn-export">Export</button>
 </form>
 </body>
 </html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="export_script.js" type="text/javascript"></script>
