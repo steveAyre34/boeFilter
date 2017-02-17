@@ -1,0 +1,23 @@
+<?php
+	session_start();
+
+?>
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<form action="do_export.php" method="POST" enctype="multipart/form-data">
+	<input type="file" name="uploadFile[]" multiple=""/><br>
+	<select name="county">
+		<option value="selected">Choose a county</option>
+		<option value="ulster">Ulster County</option>
+		<option value="columbia">Columbia County</option>
+	</select>   
+	<button type="submit" name="btn-export">Export</button>
+	<table>
+		
+	</table>
+</form>
+</body>
+</html>
