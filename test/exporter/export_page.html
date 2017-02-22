@@ -1,0 +1,27 @@
+<?php
+	session_start();
+
+?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>BOE Data Filter Ver. 3</title>
+<link rel="StyleSheet" type="styles.css">
+</head>
+<body>
+<form action="do_export.php" method="POST" enctype="multipart/form-data">
+	<select name="county">
+		<option value="selected">Choose a county</option>
+		<option value="ulster">Ulster County</option>
+		<option value="columbia">Columbia County</option>
+	</select>   
+	<button type="button" name="selectCounty" id="selectCounty">Select County</button>
+	<div id="selectFields"></div>
+	<button type="submit" id="btn-export" name="btn-export">Export</button>
+</form>
+</body>
+</html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="export_script.js" type="text/javascript"></script>

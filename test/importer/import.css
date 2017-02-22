@@ -1,0 +1,14 @@
+#headerType {
+	position: absolute;
+	left: 250px;
+}
+
+#fileHeader {
+	position: absolute;
+	left: 0px;
+}
+
+#headerLength {
+	position: absolute;
+	left: 400px;
+}
