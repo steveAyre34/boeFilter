@@ -203,7 +203,7 @@ else{
 	$queries = $_SESSION["queue"];
 	$county = $_SESSION["county"];
 	$verified = $county . "_verified";
-	$columns_selected = " voter_id, first_name, middle_name, last_name, street_no, street_name, apt_no, city, state, zip, zip4, party, history1, history2, history3, history4, history5, history6, history7, history8, history9, history10, history11, history12 ";
+	$columns_selected = " voter_id, first_name, middle_name, last_name, street_no, street_name, apt_no, city, state, zip, zip4, district, party, history1, history2, history3, history4, history5, history6, history7, history8, history9, history10, history11, history12 ";
 	$union_queries = array();
 	
 	$file_name = array_keys($queries)[0];
@@ -215,7 +215,7 @@ else{
 	}
 	
 	$union_select = implode(" UNION ", $union_queries);
-	$final_query = "SELECT t2.voter_id as voter_id, first_name, middle_name, last_name, street_no, street_name, apt_no, party, history1, history2, history3, history4, history5, history6, history7, history8, history9, history10, history11, history12, t2.city, t2.state, t2.zip, t2.zip4, count(t2.voter_id) as count FROM ("
+	$final_query = "SELECT t2.voter_id as voter_id, first_name, middle_name, last_name, street_no, street_name, apt_no, party, district, history1, history2, history3, history4, history5, history6, history7, history8, history9, history10, history11, history12, t2.city, t2.state, t2.zip, t2.zip4, count(t2.voter_id) as count FROM ("
 					. $union_select . ") as t2 GROUP BY last_name, street_no, street_name, apt_no, city, state, zip";
 	
 	
@@ -259,6 +259,7 @@ else{
 		$result_final_array[$voter_id]["foreign_country"] = "";
 		$result_final_array[$voter_id]["foreign_pc"] = "";
 		$result_final_array[$voter_id]["party"] = $voter["party"];
+		$result_final_array[$voter_id]["district"] = $voter["district"];
 		$result_final_array[$voter_id]["count"] = $voter["count"];
 		$result_final_array[$voter_id]["history1"] = $voter["history1"];
 		$result_final_array[$voter_id]["history2"] = $voter["history2"];
@@ -292,7 +293,7 @@ else{
 		}
 	}
 	
-	fputcsv($file, ["Voter ID", "Name", "Address Line 1", "Address Line 2", "City", "State", "ZIP", "ZIP4", "CRRT", "DP3", "Party", "Foreign City", "Foreign Country", "Foreign Postal Code", "Family Members", "History 1", "History 2", "History 3", "History 4", "History 5", "History 6", "History 7", "History 8", "History 9", "History 10", "History 11", "History 12"]);
+	fputcsv($file, ["Voter ID", "Name", "Address Line 1", "Address Line 2", "City", "State", "ZIP", "ZIP4", "District", "CRRT", "DP3", "Party", "Foreign City", "Foreign Country", "Foreign Postal Code", "Family Members", "History 1", "History 2", "History 3", "History 4", "History 5", "History 6", "History 7", "History 8", "History 9", "History 10", "History 11", "History 12"]);
 	foreach($result_final_array as $voter){
 		$full_name = preg_replace('/\s\s+/', ' ', $voter["first_name"] . " " . $voter["middle_name"] . " " . $voter["last_name"]);
 		$full_name = trim($full_name);
@@ -304,6 +305,7 @@ else{
 							 $voter["state"],
 							 $voter["zip"],
 							 $voter["zip4"],
+							 $voter["district"],
 							 $voter["crrt"],
 							 $voter["dp3"],
 							 $voter["party"],
